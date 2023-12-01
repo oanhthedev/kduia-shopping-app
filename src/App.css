@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: left ;
+  margin: 12px;
 }
 
 .App-logo {
@@ -39,3 +40,73 @@
     transform: rotate(360deg);
   }
 }
+#cartval {
+  width:100%;
+  height:fit-content; 
+  background-color: rgb(212, 230, 253);
+  text-align: left;
+  padding: 15px 15px 10px 15px;
+  border-radius: 6px;
+  font-family:Arial, Helvetica, sans-serif; 
+  font-size: 14px;
+  color:rgb(21, 81, 161);
+  
+}
+
+ 
+#locat {
+  width: 100%;
+  height: fit-content; 
+  background-color: rgb(229, 227, 227);
+  text-align: left;
+  padding: 15px 15px 10px 15px;
+  border-radius: 6px;
+  font-family:Arial, Helvetica, sans-serif; 
+  font-size: 14px;
+  color:rgb(40, 41, 43);
+}
+
+table {
+  
+  margin-left: 15px;
+  
+  
+}
+
+.cartrow{
+  border-bottom: 1px solid rgb(218, 216, 216);
+}
+th {
+  width: 20%;
+  font-family:Arial, Helvetica, sans-serif; 
+  font-size: 15px;
+  border-bottom: 1px solid rgb(226, 224, 224); 
+}
+.label{
+  background-color: rgb(229, 227, 227);
+  padding: 7px 10px 7px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+ 
+}
+.addItem{
+  padding: 7px 10px 7px 10px;
+  font-size: 14px;
+}
+input{
+  padding: 6px 10px 6px 10px;
+  font-size: 14px;
+}
+
+button{
+  padding: 6px 10px 6px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: rgb(90, 138, 251);
+  color: white;
+}
+#addForm{
+  margin-left: 30px;
+ 
+}
+
