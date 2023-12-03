@@ -3,102 +3,71 @@ import React, { createContext, useReducer } from 'react';
 
 export const AppReducer =(state,action)=> 
 {   
-   
+    // let new_expenses=[];
     switch (action.type)
     {
-        case 'ADD_ALLOCATION':
-          
-             state.AllocatedAccounts.map((account) => {
-                if(account.name===action.acc.selectedName )
-                {   
-                    account.budget += parseInt(action.acc.selectedAmount); 
-                }
-                return true;
-            }); 
-            action.type ="DONE"; 
-            return {...state}; 
-        
-        case 'INCREASE_10': 
-            state.AllocatedAccounts.map((account) => {
-                if(account.name===action.acc.selectedName )
+        case 'ADD_QUANTITY':
+            
+            
+             state.expenses.map((expense) => {
+                if(expense.name===action.loca.selectedName )
                 {
-                    account.budget += 10; 
+                    expense.quantity +=  parseInt(action.loca.selectedQuantity); 
                 }
+                
                 return true;
             }); 
             action.type ="DONE"; 
             return {...state}; 
      
-        case 'REDUCE_ALLOCATION': 
-            state.AllocatedAccounts.map((account) =>{
-                if(account.name===action.acc.selectedName)
+        case 'REDUCE': 
+            state.expenses.map((expense) =>{
+                if(expense.name===action.loca.selectedName)
                 {
-                    account.budget = account.budget - action.acc.selectedAmount; 
-                    if (account.budget < 0) 
+                    expense.quantity = expense.quantity - action.loca.selectedQuantity; 
+                    if (expense.quantity < 0) 
                     {
-                        account.budget = 0;
+                        expense.quantity = 0;
                     }  
-                }   
-                return true;   
-            }) ;
-            action.type ="DONE";
-            return { ...state};
-
-        case 'DECREASE_10': 
-            state.AllocatedAccounts.map((account) =>{
-                if(account.name===action.acc.selectedName)
-                {
-                    account.budget = account.budget - 10; 
-                    if (account.budget < 0) 
-                    {
-                        account.budget = 0;
-                    }  
-                }   
-                return true;   
+                }
+                 
+                return true; 
+               
             }) ;
             action.type ="DONE";
             return { ...state};
        
         case 'DELETE': 
-            state.AllocatedAccounts.map((account) => {
-                if(account.name===action.acc.selectedName )
+            state.expenses.map((expense)=>{
+                if (expense.name === action.loca.selectedName)
                 {
-                    account.budget =0 ; 
+                    expense.quantity = 0; 
                 }
-                return true;
-            });  
+                return true; 
+            }); 
             action.type ="DONE";
             return {...state}; 
 
-        case 'BUDGET': 
+        case 'LOCATION': 
             action.type ="DONE";
-            state.TotalBudget = action.total;  
+            state.location = action.loca; 
             return{ ...state};
-
-        case 'CURRENCY': 
-            action.type ="DONE";
-            state.Currency = action.currency; 
-            return{ ...state};
-
         default: 
             return {...state}; 
-
     }      
 
 }; 
 
 const initialState ={
-    AllocatedAccounts: [ 
-        {id:"Marketing", name:"Marketing", budget:0 }, 
-        {id:"Human Resource", name:"Human Resource", budget: 0 }, 
-        {id:"Sales", name:"Sales", budget: 0 }, 
-        {id:"IT", name:"IT", budget: 0 }, 
-        {id:"Finance", name:"Finance", budget: 0 }, 
-      
+    expenses: [ 
+        {id:1, name:"Shirt", quantity: 5, unitPrice:500 }, 
+        {id:2, name:"Jeans", quantity: 0, unitPrice:300 }, 
+        {id:3, name:"Dress", quantity: 0, unitPrice:400 },
+        {id:4, name:"Dinner Set", quantity: 0, unitPrice:600 },
+        {id:5, name:"Bag", quantity: 0, unitPrice:200 },
     ],
-    Currency: '',  
-    TotalBudget: 0,
-    Spent: 0,
+    location: '₹',  
+    cartValue: 0
 
 }; 
 
@@ -106,23 +75,22 @@ const initialState ={
 export const AppContext = createContext(); 
 
 export const AppProvider = (props) =>
-{   
-    const [state,dispatch]=useReducer(AppReducer,initialState); 
+{   const [state,dispatch]=useReducer(AppReducer,initialState); 
     
-    const totalExpenses = state.AllocatedAccounts.reduce((total,account) => { 
-        return (total += parseInt(account.budget)) ;
+    const totalExpenses = state.expenses.reduce((total,item) => { 
+        return (total=total + (item.unitPrice * item.quantity)) ;
     },0);
-    state.Spent = totalExpenses;  
+    state.cartValue = totalExpenses;  
 
     
     return(
     <AppContext.Provider 
         value={
-            {Accounts : state.AllocatedAccounts,
-            Currency : state.Currency, 
-            Budget: state.TotalBudget, 
-            Spent: state.Spent, 
-            dispatch,} }
+            {expenses : state.expenses,
+            location : state.location, 
+            cartValue: state.cartValue, 
+            dispatch,} 
+            }
     >
             {props.children}  
     </AppContext.Provider>
